@@ -1,0 +1,14 @@
+DROP TABLE LPsplitscleaned
+
+SELECT L1.*
+		,l2.company as CompanyType 
+into LPSplitsCleaned
+FROM LPsplits L1
+
+OUTER APPLY (
+SELECT TOP 1 COMPANY FROM LPsplits L2 WHERE NAIC IS NULL AND COMPANY IS NOT NULL AND L2.LPSPLITSID<=L1.LPSPLITSID ORDER BY LPSPLITSID DESC) l2
+
+WHERE L1.NAIC IS NOT NULL
+
+
+select * from lpsplitscleaned
